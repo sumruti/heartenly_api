@@ -27,6 +27,7 @@ bucketPromise.then(
         console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
       });
 }).catch(
+
   function(err) {
     console.error(err, err.stack);
 });
