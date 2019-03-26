@@ -46,6 +46,8 @@ min: -1000
 , integer: true
 })
 
+console.log('90090999999999999999999999')
+
 if (req.files) {
 /*console.log(req.files.pictures.length)
 if (req.files.pictures.length) {
