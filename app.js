@@ -4,6 +4,7 @@
 	const bodyParser = require('body-parser');
 	const mongoose  = require('mongoose');
 	var cors = require('cors')
+	const path = require('path');
 	app.use(cors())
     /*Routs*/
     const usersignup = require('./api/routes/signup');
@@ -13,10 +14,12 @@
     app.use('/users/signup',usersignup);
     app.use('/users/login',userlogin);
     app.use('/users/forgotpassword',forgotpassword);
-    app.use('/users/GetUserById',GetUserProfile);
+    app.use(GetUserProfile);
 
 	//Models 
 	usermodel = require('./api/models/signup');
+	userimg = require('./api/models/user_img');
+	mobile_number = require('./api/models/mobile');
 
 
 	const options = {
@@ -51,6 +54,8 @@
     app.use(morgan('dev'));
     app.use(bodyParser.urlencoded({ extended : false}));
     app.use(bodyParser.json());
+    app.use(express.static(path.join(__dirname, 'uploads')));
+
     app.use(function(req, res, next) {
 	    res.setHeader("Access-Control-Allow-Origin", "*");
 	    res.setHeader("Access-Control-Allow-Credentials", "true");

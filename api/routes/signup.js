@@ -21,13 +21,21 @@ app.post('/', (req, res, next) => {
 
    	 let Data = new usermodel({
 		  username: username,
-		 //gender: gender,
+		  gender: '',
+		  fullName:'',
+		  DOB:'',
+		  religion:'',
+		  wanna_find:'',
+		  child:'',
+		  address:'',
 		  status: status,
 		  email: email,
 		  mobileNumber: mobileNumber,
 		  password: hashedPassword,
-		  username: username,
-		  encryptedpass:encryptedString
+		  encryptedpass:encryptedString,
+		  mobile_verified_status:'',
+		  otp_expire_time:'',
+		  otp:''
 
 		  
 	 });
