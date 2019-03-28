@@ -32,6 +32,8 @@ app.post('/users/GetUserById', (req, res, next) => {
                 });
 	       return res.status(201).json({ data: result,user_img:user_img,primaryimg:primaryimg});
 	    });
+
+         
 	     
      })
 
