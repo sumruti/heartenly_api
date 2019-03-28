@@ -11,15 +11,18 @@
     const userlogin = require('./api/routes/login');
     const forgotpassword = require('./api/routes/forgotpassword');
     const GetUserProfile = require('./api/routes/GetUserProfile');
+    const payments = require('./api/routes/payments');
     app.use('/users/signup',usersignup);
     app.use('/users/login',userlogin);
     app.use('/users/forgotpassword',forgotpassword);
+    app.use('/users/payments',payments);
     app.use(GetUserProfile);
 
 	//Models 
 	usermodel = require('./api/models/signup');
 	userimg = require('./api/models/user_img');
 	mobile_number = require('./api/models/mobile');
+	userpayments = require('./api/models/payments');
 
 
 	const options = {
