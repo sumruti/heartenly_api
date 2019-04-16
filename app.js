@@ -12,6 +12,9 @@
     const forgotpassword = require('./api/routes/forgotpassword');
     const GetUserProfile = require('./api/routes/GetUserProfile');
     const payments = require('./api/routes/payments');
+
+
+	//const imageminPngquant = require('imagemin-pngquant');
     app.use('/users/signup',usersignup);
     app.use('/users/login',userlogin);
     app.use('/users/forgotpassword',forgotpassword);
@@ -72,7 +75,6 @@
     });
 
 
-    
 
     app.use( (req, res, next) =>{
         const error = new Error('Not Found');

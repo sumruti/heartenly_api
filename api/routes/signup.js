@@ -35,7 +35,8 @@ app.post('/', (req, res, next) => {
 		  encryptedpass:encryptedString,
 		  mobile_verified_status:'',
 		  otp_expire_time:'',
-		  otp:''
+		  otp:'',
+		  role:'EMAIL'
 
 		  
 	 });

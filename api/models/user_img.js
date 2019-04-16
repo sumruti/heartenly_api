@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-const userimg = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const userimg = new Schema({
     image: {type: String},
     SetAsPrimary:{type:String},
-    user_id:{type:String}
+    user_id: { type: Schema.Types.ObjectId, ref: "users" },
     
 })
 

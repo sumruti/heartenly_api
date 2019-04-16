@@ -4,12 +4,15 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended : false}));
 app.use(bodyParser.json());
 const nodemailer = require("nodemailer");
+
 var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('myTotalySecretKey');
 app.post('/', (req, res, next) => {
 
      var email = req.body.email;
+   console.log()
      usermodel.find({'email':email}).then(user=>{
      	console.log(user)
      	//return false
@@ -17,12 +20,34 @@ app.post('/', (req, res, next) => {
 	    	return res.status(201).send({ status: false,message: 'Email does not exist' });
 	    }else{ console.log(user[0].password,'0000');
 	    	    const decryptedpassword = cryptr.decrypt(user[0].encryptedpass);
+	    	   
 
-	    	    console.log(decryptedpassword);
-	    	   // return false;
+	    	    if(req.body.flag=="Newpassword"){
+	    	    	 var hashedPassword = bcrypt.hashSync(req.body.NewPass, 8);
+    		        var encryptedString = cryptr.encrypt(req.body.NewPass);
+                         usermodel.update({'email':email}, {'$set': {
+								'password': hashedPassword,
+								'encryptedpass':encryptedString,
+							
+								}}).then(result=>{
+										 return res.status(200).json({
+										          message: 'Password updated successful',
+										          status: true,
+										        });
+								})
+
+	    	    }else{
+	    	 	   	  // return false;
+	    	    	return res.status(200).json({
+			          message: 'success',
+			          status: true,
+			        });
+
+	    	    }
+	    	 
 	    	  
 
-               // create reusable transporter object using the default SMTP transport
+              /* // create reusable transporter object using the default SMTP transport
 				var transporter = nodemailer.createTransport('smtps://sumitchoudhary727@gmail.com:sumit1994@smtp.gmail.com');
 
 				// setup e-mail data with unicode symbols
@@ -39,13 +64,13 @@ app.post('/', (req, res, next) => {
 				        return console.log(error);
 				    }
 				    return res.status(200).json({
-			          message: 'An e-mail has been sent to ' + user[0].email + ' with further instructions.',
+			          message: 'success',
 			          status: true,
 			        });
 
 				    
 				    console.log('Message sent: ' + info.response);
-				});
+				});*/
 					
 			  
 	    }

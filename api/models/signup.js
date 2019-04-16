@@ -1,6 +1,8 @@
 
 const mongoose = require('mongoose');
-const userSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
     username: { type: String,unique : true},
     gender: { type: String,},
     status: { type: String,},
@@ -16,7 +18,9 @@ const userSchema = new mongoose.Schema({
     encryptedpass: { type: String,},
     mobile_verified_status :{type:String},
     otp_expire_time : {type:String},
+    role : {type:String},
     otp: {type:String},
+    user_id: { type: Schema.Types.ObjectId, ref: "user_images" },
    
 })
 

@@ -32,8 +32,6 @@ app.post('/users/GetUserById', (req, res, next) => {
                 });
 	       return res.status(201).json({ data: result,user_img:user_img,primaryimg:primaryimg});
 	    });
-
-         
 	     
      })
 
@@ -207,4 +205,57 @@ app.post('/users/setImgPrimary' , (req, res, next) => {
            
        })
 })
+
+app.get('/users/GetallUser', async (req, res, next) => {
+
+            var users= [];
+            var user = await userimg.find()
+                    .populate("user_id")
+                    .exec();
+                     
+                    user.forEach(function(user) {
+                        if(user.SetAsPrimary==1){
+                            users.push({user})
+                                console.log(user.user_id)
+                        }
+                    })
+                    return res.status(201).json({ data: users,status:true});
+
+  /* usermodel.find({}).then(result=>{
+   // console.log(result)
+
+     result.forEach(function(user) {
+
+         userimg.find({'user_id':user._id}).then(user_img=>{
+                   user_img.forEach(function(GetPrimaryImg) {
+                             if(GetPrimaryImg.SetAsPrimary==1){
+                                 users.push({user:GetPrimaryImg.image,
+                                    username:user.username,
+                                    fullname:user.fullName,
+                                    gender:user.gender,
+                                    status:user.status,
+                                    email:user.email,
+                                    DOB:user.DOB,
+                                    religion:user.religion,
+                                    wanna_find:user.wanna_find,
+                                    child:user.child,
+                                    address:user.address,
+                                    mobileNumber:user.mobileNumber,
+                                })
+                             }
+                });
+            });
+         
+     })
+               return res.status(201).json({ data: users,status:true});
+
+     
+});*/
+});
+
+
+
+
+
+
 module.exports = app;
