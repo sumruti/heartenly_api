@@ -21,22 +21,25 @@ const moment = require('moment');
 
 app.post('/users/GetUserById', (req, res, next) => {
 
-     var user_id = req.body.user_id;
-     usermodel.find({'_id':user_id}).then(result=>{
-     	 userimg.find({'user_id':user_id}).then(user_img=>{
-                   var primaryimg= [];
-                   user_img.forEach(function(GetPrimaryImg) {
-                             if(GetPrimaryImg.SetAsPrimary==1){
-                                primaryimg.push(GetPrimaryImg.image)
-                             }
-                });
-	       return res.status(201).json({ data: result,user_img:user_img,primaryimg:primaryimg});
-	    });
-	     
-     })
+      var user_id = req.body.user_id;
+      usermodel.find({'_id':user_id}).then(result=>{
+        userPost.find({'user_id':user_id}).then(userPost=>{
+          userimg.find({'user_id':user_id}).then(user_img=>{
+           var primaryimg= [];
+              user_img.forEach(function(GetPrimaryImg) {
+                 if(GetPrimaryImg.SetAsPrimary==1){
+                    primaryimg.push(GetPrimaryImg.image)
+                 }
+              });
+            return res.status(201).json({ data: result,userPost:userPost,user_img:user_img,primaryimg:primaryimg});
+
+          });
+        });
+
+      })
 
 
-	  
+    
 });
 
 app.post('/users/edit_user_profile', (req, res, next) => {
@@ -47,9 +50,9 @@ app.post('/users/edit_user_profile', (req, res, next) => {
             })
  
         if (req.files) {
-        	/*console.log(req.files.pictures.length)
-        	  if (req.files.pictures.length) {
-        	  	console.log('001110')
+          /*console.log(req.files.pictures.length)
+            if (req.files.pictures.length) {
+              console.log('001110')
                     for (i = 0; i < req.files.pictures.length; i++)
                     {
 
@@ -65,24 +68,24 @@ app.post('/users/edit_user_profile', (req, res, next) => {
                             console.log("error is:" + err);
                     });
                     console.log(req.protocol+'://'+req.get('host')+'/user_img/'+pictures,'--')
-        	        let Data = new userimg({
-        			  image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
-        			  user_id:req.body.user_id,
-        			  SetAsPrimary:'0'
+                  let Data = new userimg({
+                image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
+                user_id:req.body.user_id,
+                SetAsPrimary:'0'
 
-        		  
-        		   });
+              
+               });
 
                    Data.save()
-        			   .then(img_res => {
-                     		  console.log(img_res)
-        			   });
+                 .then(img_res => {
+                          console.log(img_res)
+                 });
 
                
                 } 
             }else{*/
 
-            	var data = req.files.pictures.name;
+              var data = req.files.pictures.name;
                     // update user img
                     var splitname = data.split('.');
                     var time = new Date().getTime() / 1000;
@@ -93,39 +96,37 @@ app.post('/users/edit_user_profile', (req, res, next) => {
                         if (err)
                             console.log("error is:" + err);
                     });
-        	        let Data = new userimg({
-        			  image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
-        			  user_id:req.body.user_id,
-        			  SetAsPrimary:'0'
-
-        		  
-        		   });
+                  let Data = new userimg({
+                    image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
+                    user_id:req.body.user_id,
+                    SetAsPrimary:'0'
+                   });
 
                    Data.save()
-        			   .then(img_res => {
-        			   });
+                 .then(img_res => {
+                 });
 
           //  }
         }
 
                
 
-        	    
-        			usermodel.update({'_id': req.body.user_id}, {'$set': {
-        				    'username': req.body.username,
-        				    'gender': req.body.gender,
-        				    //'email': req.body.email,
-        				    'fullName': req.body.fullName,
-        				    'DOB': req.body.DOB,
-        				    'religion': req.body.religion,
-        				    'status': req.body.status,
-        				    'wanna_find': req.body.wanna_find,
-        				    'child': req.body.child,
-        				    'address': req.body.address,
-        				}}).then(result=>{
-        			       return res.status(201).json({message:"Profile updated successfull", data: result});
-        			     
-        		     })
+              
+              usermodel.update({'_id': req.body.user_id}, {'$set': {
+                    'username': req.body.username,
+                    'gender': req.body.gender,
+                    //'email': req.body.email,
+                    'fullName': req.body.fullName,
+                    'DOB': req.body.DOB,
+                    'religion': req.body.religion,
+                    'status': req.body.status,
+                    'wanna_find': req.body.wanna_find,
+                    'child': req.body.child,
+                    'address': req.body.address,
+                }}).then(result=>{
+                     return res.status(201).json({message:"Profile updated successfull", data: result});
+                   
+                 })
 });
 
 
@@ -253,7 +254,95 @@ app.get('/users/GetallUser', async (req, res, next) => {
 });*/
 });
 
+app.post('/AddPost' , (req, res, next) => {
+      var status = req.body.status;
+      var date = req.body.date;
+      var user_id = req.body.user_id;
+      userPost.find({user_id: user_id}).then(checkUserStatus=>{
+        console.log(checkUserStatus.length,'checkUserStatus');
 
+         if(checkUserStatus.length==0){
+            let Data = new userPost({
+                  status: status,
+                  date: date,
+                  user_id:user_id,
+               });
+              Data.save()
+                   .then(result => {
+                   
+                     return res.status(200).json({
+                        message: "Status added successfully",
+                        status: true,
+                       
+                      });
+                   })
+                   .catch(err => {
+                     console.log(err);
+                      return res.status(201).json({
+                          message: "Something went wrong,Please try again",
+                          status: false,
+                        });
+                   })
+
+         }else{
+             userPost.update({'user_id': user_id}, {'$set': {
+                'status':status,
+                'date':date,
+                }}).then(result=>{
+                      return res.status(200).json({
+                        message: "Status updated successfully",
+                        status: true,
+                       
+                      });
+                });
+
+         }
+             
+       });
+})
+app.post('/aboutMe' , (req, res, next) => {
+      var aboutMe = req.body.aboutMe;
+      console.log(aboutMe,'aboutMe')
+      var user_id = req.body.user_id;
+      userPost.find({user_id: user_id}).then(checkUser=>{
+
+         if(checkUser.length==0){
+            let Data = new userPost({
+                  about: aboutMe,
+                  user_id:user_id,
+               });
+              Data.save()
+                   .then(result => {
+                   
+                     return res.status(200).json({
+                        message: "About added successfully",
+                        status: true,
+                       
+                      });
+                   })
+                   .catch(err => {
+                     console.log(err);
+                      return res.status(201).json({
+                          message: "Something went wrong,Please try again",
+                          status: false,
+                        });
+                   })
+
+         }else{
+             userPost.update({'user_id': user_id}, {'$set': {
+                'about':aboutMe,
+                }}).then(result=>{
+                      return res.status(200).json({
+                        message: "About added successfully",
+                        status: true,
+                       
+                      });
+                });
+
+         }
+             
+       });
+})
 
 
 

@@ -26,6 +26,8 @@
 	userimg = require('./api/models/user_img');
 	mobile_number = require('./api/models/mobile');
 	userpayments = require('./api/models/payments');
+		userPost = require('./api/models/Post');
+
 
 
 	const options = {
