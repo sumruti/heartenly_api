@@ -15,20 +15,27 @@ app.post('/', (req, res, next) => {
      var username = req.body.username;
      var role = req.body.role;
   console.log(req.body)
-     if(role==''){
+     if(role=='EMAIL'){
      	 usermodel.find({$or: [{email: UserEmailMobile},{username: UserEmailMobile},{mobileNumber: UserEmailMobile},]}).then(user=>{
 			    if (user.length==0){
 			    	return res.status(201).send({ status: false, token: null,user_id:null,message: 'Invalid login credentials' });
 			    }else{ 
-					    var passwordIsValid = bcrypt.compareSync(password,user[0].password);
-					    if (!passwordIsValid){
-								return res.status(201).send({ status: false, token: null ,message: 'Invalid login credentials',user_id:null});
-					    }else{ 
-						        var token = jwt.sign({ id: user._id }, 'ADNDJKWEDJKSABSCNMCBNXZCHSADA', {
-						     	   expiresIn: 86400 // expires in 24 hours
-						        });
-					            res.status(200).send({ status: true, token: token,message:"Login successfull" ,user_id:user[0]._id});
-				        } 
+			    	  if(user[0].password){
+			    	  	   var passwordIsValid = bcrypt.compareSync(password,user[0].password);
+						    if (!passwordIsValid){
+									return res.status(201).send({ status: false, token: null ,message: 'Invalid login credentials',user_id:null});
+						    }else{ 
+							        var token = jwt.sign({ id: user._id }, 'ADNDJKWEDJKSABSCNMCBNXZCHSADA', {
+							     	   expiresIn: 86400 // expires in 24 hours
+							        });
+						            res.status(200).send({ status: true, token: token,message:"Login successfull" ,user_id:user[0]._id});
+					        } 
+
+			    	  }else{
+			    	  	 			    	return res.status(201).send({ status: false, token: null,user_id:null,message: 'Invalid login credentials' });
+
+			    	  }
+					    
 			}
 		     }).catch(err => {
 			   	 console.log(err);
