@@ -163,17 +163,17 @@ app.post('/users/verifyotp' , (req, res, next) => {
           console.log(result[0].otp);
           console.log(req.body.otp);
               
-               if(result[0].otp===req.body.otp){
+               //if(result[0].otp===req.body.otp){
                    usermodel.update({'_id': req.body.user_id}, {'$set': {
                             'mobile_verified_status': 1,
                         }}).then(result=>{
                            return res.status(201).json({message:"Verified",status:true});
                      })
                   
-               }else{
+             /*  }else{
 
                   return res.status(201).json({message:"You have entered the wrong otp password",status:false});
-               }
+               }*/
            
         
 
