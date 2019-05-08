@@ -131,7 +131,7 @@ app.post('/users/edit_user_profile', (req, res, next) => {
 
 
 app.post('/users/mobile', (req, res, next) => {
-    var otp = Math.floor(1000 + Math.random() * 9000);
+  /*  var otp = Math.floor(1000 + Math.random() * 9000);
     var startdate = moment().format("YYYY-MM-DD hh:mm:ss");
     var expire_time = moment(startdate).add(1, 'minutes');  
     console.log(req.body)
@@ -140,12 +140,11 @@ app.post('/users/mobile', (req, res, next) => {
         to: req.body.mobile,  // Text this number
         from: '+12028049449' // From a valid Twilio number
     })
-    .then((message) => console.log(message,'-------------'));
-
+    .then((message) => console.log(message,'-------------'));*/
+  console.log(req.body);
     usermodel.update({'_id': req.body.user_id}, {'$set': {
             'mobile_verified_status': 0,
-            'otp_expire_time':expire_time,
-            'otp' : otp
+            'otp' : req.body.OTP
         }}).then(result=>{
             return res.status(201).json({status:true});
          
@@ -161,12 +160,8 @@ app.post('/users/mobile', (req, res, next) => {
 app.post('/users/verifyotp' , (req, res, next) => {
     usermodel.find({'_id':req.body.user_id}).then(result=>{
 
-        var expire_time = moment(result[0].otp_expire_time).format("YYYY-MM-DD hh:mm:ss")
-        var now =  moment().format("YYYY-MM-DD hh:mm:ss");
-
-        if (now > expire_time) {
-               return res.status(201).json({message:"your otp is expired please re-send again",status:false});
-        } else {
+          console.log(result[0].otp);
+          console.log(req.body.otp);
               
                if(result[0].otp===req.body.otp){
                    usermodel.update({'_id': req.body.user_id}, {'$set': {
@@ -180,7 +175,7 @@ app.post('/users/verifyotp' , (req, res, next) => {
                   return res.status(201).json({message:"You have entered the wrong otp password",status:false});
                }
            
-        }
+        
 
     });
 });
