@@ -26,7 +26,11 @@
 	userimg = require('./api/models/user_img');
 	mobile_number = require('./api/models/mobile');
 	userpayments = require('./api/models/payments');
-		userPost = require('./api/models/Post');
+	userPost = require('./api/models/Post');
+	user_Criteria = require('./api/models/user_Criteria');
+	user_work = require('./api/models/user_work');
+	user_education = require('./api/models/user_education');
+	user_Domiciles = require('./api/models/user_Domiciles');
 
 
 

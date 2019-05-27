@@ -19,6 +19,8 @@ const userSchema = new Schema({
     mobile_verified_status :{type:String},
     otp_expire_time : {type:String},
     role : {type:String},
+    nickName : {type:String},
+    interestedIn : {type:String},
     otp: {type:String},
     user_id: { type: Schema.Types.ObjectId, ref: "user_images" },
    
