@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
     currentcity: {type: String},
     Homestatus: {type: String},
     Hometown: {type: String},
-   
+    Privacy: {type: String},
+
 });
 module.exports = mongoose.model('user_Domiciles', userSchema);

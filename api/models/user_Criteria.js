@@ -23,7 +23,8 @@ const userSchema = new Schema({
     Piercing: {type:String},
     hobby: {type:String},
     user_id: {type:String},
-   
+    Privacy: {type:String},
+
 })
 
 module.exports = mongoose.model('user_Criteria', userSchema);

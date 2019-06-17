@@ -33,7 +33,6 @@
 	user_Domiciles = require('./api/models/user_Domiciles');
 
 
-
 	const options = {
 	  useNewUrlParser: true,
 	  useCreateIndex: true,

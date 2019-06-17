@@ -3,6 +3,7 @@ const userSchema = new mongoose.Schema({
     Work: {type: String},
     income: {type: String},
     user_id: {type: String},
+    Privacy: {type: String},
 
    
 })

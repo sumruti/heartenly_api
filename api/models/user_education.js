@@ -3,6 +3,8 @@ const userSchema = new mongoose.Schema({
     Lasteducation: {type: String},
     Departement: {type: String},
     user_id: {type: String},
+    Privacy: {type: String},
+
    
 })
 
