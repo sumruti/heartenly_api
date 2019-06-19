@@ -39,7 +39,7 @@ app.post('/users/GetUserById', (req, res, next) => {
       })
 
 
-	  
+    
 });
 
 app.post('/users/edit_user_profile', (req, res, next) => {
@@ -50,9 +50,9 @@ app.post('/users/edit_user_profile', (req, res, next) => {
             })
  
         if (req.files) {
-        	/*console.log(req.files.pictures.length)
-        	  if (req.files.pictures.length) {
-        	  	console.log('001110')
+          /*console.log(req.files.pictures.length)
+            if (req.files.pictures.length) {
+              console.log('001110')
                     for (i = 0; i < req.files.pictures.length; i++)
                     {
 
@@ -68,24 +68,24 @@ app.post('/users/edit_user_profile', (req, res, next) => {
                             console.log("error is:" + err);
                     });
                     console.log(req.protocol+'://'+req.get('host')+'/user_img/'+pictures,'--')
-        	        let Data = new userimg({
-        			  image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
-        			  user_id:req.body.user_id,
-        			  SetAsPrimary:'0'
+                  let Data = new userimg({
+                image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
+                user_id:req.body.user_id,
+                SetAsPrimary:'0'
 
-        		  
-        		   });
+              
+               });
 
                    Data.save()
-        			   .then(img_res => {
-                     		  console.log(img_res)
-        			   });
+                 .then(img_res => {
+                          console.log(img_res)
+                 });
 
                
                 } 
             }else{*/
 
-            	var data = req.files.pictures.name;
+              var data = req.files.pictures.name;
                     // update user img
                     var splitname = data.split('.');
                     var time = new Date().getTime() / 1000;
@@ -96,38 +96,37 @@ app.post('/users/edit_user_profile', (req, res, next) => {
                         if (err)
                             console.log("error is:" + err);
                     });
-        	        let Data = new userimg({
-            			  image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
-            			  user_id:req.body.user_id,
-            			  SetAsPrimary:'0'
-            		   });
+                  let Data = new userimg({
+                    image: req.protocol+'://'+req.get('host')+'/user_img/'+pictures,
+                    user_id:req.body.user_id,
+                    SetAsPrimary:'0'
+                   });
 
                    Data.save()
-        			   .then(img_res => {
-        			   });
+                 .then(img_res => {
+                 });
 
           //  }
         }
 
                
 
-        	    
-        			usermodel.update({'_id': req.body.user_id}, {'$set': {
-        				    'username': req.body.username,
-        				    'gender': req.body.gender,
-        				    //'email': req.body.email,
-        				    'fullName': req.body.fullName,
-        				    'DOB': req.body.DOB,
-        				    'religion': req.body.religion,
-        				    'status': req.body.status,
-        				    'wanna_find': req.body.wanna_find,
-        				    'child': req.body.child,
-        				    'address': req.body.address,
-                    'Privacy':req.body.Privacy,
-        				}}).then(result=>{
-        			       return res.status(201).json({message:"Profile updated successfull", data: result});
-        			     
-        		     })
+              
+              usermodel.update({'_id': req.body.user_id}, {'$set': {
+                    'username': req.body.username,
+                    'gender': req.body.gender,
+                    //'email': req.body.email,
+                    'fullName': req.body.fullName,
+                    'DOB': req.body.DOB,
+                    'religion': req.body.religion,
+                    'status': req.body.status,
+                    'wanna_find': req.body.wanna_find,
+                    'child': req.body.child,
+                    'address': req.body.address,
+                }}).then(result=>{
+                     return res.status(201).json({message:"Profile updated successfull", data: result});
+                   
+                 })
 });
 
 
@@ -357,9 +356,7 @@ app.post('/user/Criteria' , (req, res, next) => {
         var Tattoo = req.body.Tattoo;
         var Piercing = req.body.Piercing;
         var hobby = req.body.hobby;
-        var Privacy = req.body.Privacy;
-        var gender = req.body.gender;
-//console.log(req.body.Privacy,'------------')
+
          let Data = new user_Criteria({
               Until: Until,
               Years:Years,
@@ -380,9 +377,7 @@ app.post('/user/Criteria' , (req, res, next) => {
               Tattoo:Tattoo,
               Piercing:Piercing,
               hobby:hobby,
-              Privacy:Privacy,
               user_id:user_id,
-              gender:gender,
           });
 
           user_Criteria.find({user_id: user_id}).then(checkUser=>{
@@ -429,10 +424,6 @@ app.post('/user/Criteria' , (req, res, next) => {
                         'Piercing':Piercing,
                         'hobby':hobby,
                         'user_id':user_id,
-                       'Privacy':Privacy,
-                       'gender':gender,
-
-
                        }
                   }).then(result=>{
                           return res.status(200).json({
@@ -448,9 +439,6 @@ app.post('/user/Criteria' , (req, res, next) => {
         });    
   
 });
-
-
-
 
 
 app.post('/getUserCriteria' , (req, res, next) => {
@@ -475,14 +463,10 @@ app.post('/User/Work' , (req, res, next) => {
      var user_id = req.body.user_id;
      var Work = req.body.Work;
      var income = req.body.income;
-     var Privacy = req.body.Privacy;
-
      let Data = new user_work({
               Work: Work,
               income:income,
               user_id:user_id,
-              Privacy:Privacy,
-
           });
 
 
@@ -513,7 +497,6 @@ app.post('/User/Work' , (req, res, next) => {
                  user_work.update({'user_id': user_id}, {'$set': {
                         'Work': Work,
                         'income': income,
-                        'Privacy': Privacy,
                        }
                   }).then(result=>{
                           return res.status(200).json({
@@ -551,14 +534,10 @@ app.post('/User/education' , (req, res, next) => {
      var user_id = req.body.user_id;
      var Lasteducation = req.body.Lasteducation;
      var Departement = req.body.Departement;
-     var Privacy = req.body.Privacy;
-
      let Data = new user_education({
               Lasteducation: Lasteducation,
               Departement:Departement,
               user_id:user_id,
-              Privacy:Privacy,
-
           });
 
 
@@ -586,7 +565,6 @@ app.post('/User/education' , (req, res, next) => {
                  user_education.update({'user_id': user_id}, {'$set': {
                         'Lasteducation': Lasteducation,
                         'Departement': Departement,
-                        'Privacy':Privacy,
                        }
                   }).then(result=>{
                           return res.status(200).json({
@@ -625,15 +603,11 @@ app.post('/User/Domiciles' , (req, res, next) => {
      var currentcity = req.body.currentcity;
      var Homestatus = req.body.Homestatus;
      var Hometown = req.body.Hometown;
-     var Privacy = req.body.Privacy;
-
      let Data = new user_Domiciles({
           currentcity: currentcity,
           Homestatus:Homestatus,
           Hometown:Hometown,
           user_id:user_id,
-          Privacy:Privacy,
-
       });
 
 
@@ -662,8 +636,6 @@ app.post('/User/Domiciles' , (req, res, next) => {
                         'currentcity': currentcity,
                         'Homestatus': Homestatus,
                         'Hometown': Hometown,
-                        'Privacy': Privacy,
-
                        }
                   }).then(result=>{
                           return res.status(200).json({
@@ -706,88 +678,7 @@ app.post('/user/editBasicInfo' , (req, res, next) => {
       var email = req.body.email;
       var phone = req.body.phone;
       var DOB = req.body.DOB;
-      var Privacy = req.body.Privacy;
-      var cover = req.body.cover;
-      var profilepic = req.body.profilepic;
-
-       if(req.files.uploadcard){
-             
-                   var data = req.files.uploadcard.name;
-                    // update user img
-
-                    var splitname = data.split('.');
-
-                    var time = new Date().getTime() / 1000;
-                    var image_name = parseInt(time) + "_." + splitname[1];
-
-                    pictures = image_name.trim(' ');
-
-                    // Use the mv() method to place the file somewhere on your server 
-                    req.files.uploadcard.mv('uploads/Document/' + pictures, function (err) {
-                        if (err)
-                            console.log("error is:" + err);
-                    });
-
-         var card = req.protocol+'://'+req.get('host')+'/Document/'+pictures;
-
-
-       }else{
-         var card = req.body.uploadcard;
-       }
-/*banner---Files------------------------------------------------------*/
-
-
-if(req.files.banner){
-             
-                   var data = req.files.banner.name;
-                    // update user img
-
-                    var splitname = data.split('.');
-
-                    var time = new Date().getTime() / 1000;
-                    var image_name = parseInt(time) + "_." + splitname[1];
-
-                    banner = image_name.trim(' ');
-
-                    // Use the mv() method to place the file somewhere on your server 
-                    req.files.banner.mv('uploads/bannerpic/' + banner, function (err) {
-                        if (err)
-                            console.log("error is:" + err);
-                    });
-
-         var banner = req.protocol+'://'+req.get('host')+'/bannerpic/'+banner;
-
-
-       }else{
-         var banner = req.body.banner;
-       }
-  
-  /*profilepic---------------------------------------*/
-                  if(req.files.profilepic){
-             
-                   var data = req.files.profilepic.name;
-                    // update user img
-
-                    var splitname = data.split('.');
-
-                    var time = new Date().getTime() / 1000;
-                    var image_name = parseInt(time) + "_." + splitname[1];
-
-                    profilepic = image_name.trim(' ');
-
-                    // Use the mv() method to place the file somewhere on your server 
-                    req.files.profilepic.mv('uploads/profilepic/' + profilepic, function (err) {
-                        if (err)
-                            console.log("error is:" + err);
-                    });
-
-         var profilepic = req.protocol+'://'+req.get('host')+'/profilepic/'+profilepic;
-
-
-       }else{
-         var profilepic = req.body.profilepic;
-       }
-                
+      console.log(req.body)
         usermodel.update({'_id': user_id}, {'$set': {
               'status': status,
               'religion':religion,
@@ -796,11 +687,7 @@ if(req.files.banner){
               'email': email,
               'phone': phone,
               'DOB': DOB,
-              'uploadcard': card,
-              'Privacy':Privacy,
-              'cover':banner,
-              'profilepic':profilepic,
-
+             
           }}).then(result=>{
                return res.status(201).json({message:"Detail updated successfully", status: true});
              

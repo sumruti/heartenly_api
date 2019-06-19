@@ -10,7 +10,6 @@ const userSchema = new Schema({
     fullName: { type: String},
     DOB: { type: String},
     religion: { type: String},
-    uploadcard: { type: String},
     wanna_find: { type: String},
     child: { type: String},
     address: { type: String},
@@ -24,10 +23,6 @@ const userSchema = new Schema({
     interestedIn : {type:String},
     otp: {type:String},
     user_id: { type: Schema.Types.ObjectId, ref: "user_images" },
-    Privacy: {type:String},
-    cover: {type:String},
-    profilepic: {type:String},
-
    
 })
 
